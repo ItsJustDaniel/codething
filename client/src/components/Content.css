@@ -1,0 +1,8 @@
+.Content-Container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.Content {
+  width: 62%;
+}

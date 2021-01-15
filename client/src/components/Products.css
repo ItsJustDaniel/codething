@@ -1,0 +1,23 @@
+.Products-title {
+  text-align: center;
+}
+
+.Products-Container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  grid-template-rows: repeat(auto-fit, minmax(230px, 1fr));
+  grid-gap: 2em;
+  margin: 30px;
+}
+
+.product-text {
+  margin: 0;
+}
+.product-price {
+  display: block;
+  margin: 0;
+}
+
+.product-image {
+  width: 100%;
+}
