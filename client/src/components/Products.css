@@ -7,12 +7,14 @@
   grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
   grid-template-rows: repeat(auto-fit, minmax(230px, 1fr));
   grid-gap: 2em;
-  margin: 30px;
+  margin: 0.5em;
+  margin-bottom: 6.5em;
 }
 
 .product-text {
   margin: 0;
 }
+
 .product-price {
   display: block;
   margin: 0;
@@ -20,4 +22,17 @@
 
 .product-image {
   width: 100%;
+}
+
+.product-image:hover {
+  transform: scale(0.9);
+  transition: 0.5s;
+  overflow: hidden;
+  opacity: 0.7;
+}
+
+.products {
+  margin-bottom: 4em;
+  width: 900px;
+  margin-right: 0;
 }

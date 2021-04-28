@@ -7,7 +7,14 @@ var cors = require("cors");
 
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
-var testAPIRouter = require("./routes/testAPI");
+const productListRouter = require("./routes/productList");
+const productDescRouter = require("./routes/productDesc");
+const testRouter = require("./routes/test");
+const shippingRates = require("./routes/shippingRates");
+const countries = require("./routes/countries");
+const sendOrder = require("./routes/sendOrder");
+const payment = require("./routes/payment");
+const { send } = require("process");
 
 var app = express();
 
@@ -26,7 +33,13 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
 
-app.use("/testAPI", testAPIRouter);
+app.use("/productList", productListRouter);
+app.use("/productDesc", productDescRouter);
+app.use("/test", testRouter);
+app.use("/shippingRates", shippingRates);
+app.use("/countries", countries);
+app.use("/sendOrder", sendOrder);
+app.use("/payment", payment);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

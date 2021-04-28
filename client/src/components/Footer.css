@@ -1,9 +1,10 @@
-.Footer {
-  display: block;
-  position: relative;
-  bottom: 0;
-  background-color: black;
+.footer {
+  background-color: rgb(30, 30, 30);
   color: white;
   width: 100%;
   text-align: center;
+  height: 2em;
+  padding: 1.3em;
+  display: block;
+  margin-bottom: 0;
 }

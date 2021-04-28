@@ -1,0 +1,36 @@
+.bredcumb-container {
+}
+
+.breadcumb-list {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.breadcumb-text {
+  list-style-type: none;
+  margin: 0.5em;
+  cursor: pointer;
+}
+
+.slide1-information {
+  font-weight: bold;
+}
+
+.payment-off {
+  color: gray;
+}
+
+.payment-on {
+  color: black;
+}
+
+.slide2 {
+  font-weight: bold;
+}
+
+.breadcumb-arrow {
+  position: relative;
+  top: 12.5px;
+  color: gray;
+}

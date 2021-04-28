@@ -1,0 +1,12 @@
+.hero-title {
+  text-align: center;
+  display: block;
+  color: white;
+  font-family: space mono;
+  font-size: 3em;
+  font-weight: bold;
+  border-right: 0.15em solid orange;
+  white-space: nowrap;
+  letter-spacing: 0.15em;
+  animation: blink-caret 0.85s step-end infinite;
+}

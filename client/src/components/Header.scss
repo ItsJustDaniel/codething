@@ -1,0 +1,47 @@
+@import "Hero";
+
+.navbar-push {
+  margin-top: $Hero-Height;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  height: 70px;
+}
+
+.navbar-unpush {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 0;
+}
+
+.navbar {
+  text-decoration: none;
+  list-style-type: none;
+  display: flex;
+  flex-direction: row;
+  font-weight: bold;
+  color: #575151;
+  z-index: 1;
+}
+
+.nav-link {
+  margin: 0 0.5em;
+  cursor: pointer;
+  color: #575151;
+  text-decoration: none;
+}
+
+.nav-link:hover {
+  color: grey;
+}
+
+.nav-cart {
+  border-radius: 100%;
+  color: white;
+  background-color: #ffa45c;
+  text-align: center;
+  position: relative;
+  bottom: 33px;
+  left: 8px;
+}

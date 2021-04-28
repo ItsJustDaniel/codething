@@ -1,10 +1,13 @@
 import React from "react";
-import "./Hero.css";
+import TypeWriter from "./typeWriter.js";
+import "./Hero.scss";
 
 const Hero = () => {
   return (
-    <div className="Hero-Background">
-      <h1 className="Hero-Title">Hello World()</h1>
+    <div className="Hero-Container">
+      <div>
+        <TypeWriter />
+      </div>
     </div>
   );
 };
