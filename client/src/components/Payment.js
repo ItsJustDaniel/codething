@@ -29,7 +29,7 @@ const Payment = (props) => {
     console.log(paymentID);
     const fetchData = async () => {
       const getClientSecret = await axios.post(
-        "http://localhost:9000/payment",
+        "https://code-clothing.herokuapp.com//payment",
         {
           items: [
             {
@@ -105,11 +105,14 @@ const Payment = (props) => {
 
     const fileIDs = cart.map((item) => item.fileID);
 
-    const sendOrder = await axios.post("http://localhost:9000/sendOrder", {
-      ...User,
-      variantIDs: variantIDs,
-      fileIDs: fileIDs,
-    });
+    const sendOrder = await axios.post(
+      "https://code-clothing.herokuapp.com/sendOrder",
+      {
+        ...User,
+        variantIDs: variantIDs,
+        fileIDs: fileIDs,
+      }
+    );
   };
 
   return (

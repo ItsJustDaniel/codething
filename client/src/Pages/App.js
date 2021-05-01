@@ -27,11 +27,11 @@ class App extends React.Component {
   };
 
   getProductDesc = () => {
-    return axios.get("http://localhost:9000/productDesc");
+    return axios.get("https://code-clothing.herokuapp.com/productDesc");
   };
 
   getProductList = () => {
-    return axios.get("http://localhost:9000/productList");
+    return axios.get("https://code-clothing.herokuapp.com/productList");
   };
 
   loadingChange = () => {
@@ -47,7 +47,7 @@ class App extends React.Component {
     const [products, desc, countries] = await Promise.all([
       this.getProductList(),
       this.getProductDesc(),
-      axios.get("http://localhost:9000/countries"),
+      axios.get("https://code-clothing.herokuapp.com/countries"),
     ]);
     this.setState(
       {

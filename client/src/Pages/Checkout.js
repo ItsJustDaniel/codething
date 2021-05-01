@@ -50,7 +50,7 @@ const Checkout = (props) => {
     });
     setLoading(true);
     const sendShipping = await axios.post(
-      "http://localhost:9000/shippingRates",
+      "https://code-clothing.herokuapp.com/shippingRates",
       {
         ...User,
         variantIDs: variantIDs,
