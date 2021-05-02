@@ -58,8 +58,8 @@ const Checkout = (props) => {
     );
     await setLoading(false);
     await console.log(sendShipping.data.result);
-    await setShipping(...sendShipping.data.result);
-    await setSlide(Slide + 1);
+    setShipping(...sendShipping.data.result);
+    setSlide(Slide + 1);
     setInformation(true);
   };
 
@@ -102,10 +102,11 @@ const Checkout = (props) => {
               paymentID={paymentID}
               setPaymentID={setPaymentID}
               setSlide={setSlide}
+              Slide={Slide}
             />
           </Elements>
         ) : (
-          Slide === 3(<Success />)
+          <Success Shipping={Shipping} />
         )}
       </div>
       <OrderSummary products={products} cart={cart} shipping={Shipping} />

@@ -15,6 +15,7 @@ const countries = require("./routes/countries");
 const sendOrder = require("./routes/sendOrder");
 const payment = require("./routes/payment");
 const { send } = require("process");
+const mail = require("./routes/mail");
 
 var app = express();
 
@@ -40,6 +41,7 @@ app.use("/shippingRates", shippingRates);
 app.use("/countries", countries);
 app.use("/sendOrder", sendOrder);
 app.use("/payment", payment);
+app.use("/mail", mail);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

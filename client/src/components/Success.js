@@ -11,6 +11,7 @@ const Success = (props) => {
     <div className="success-container">
       <h1>Success!</h1>
       <h2>Thank you for your order</h2>
+      <h5>estimated arrival at {props.Shipping.name}</h5>
     </div>
   );
 };

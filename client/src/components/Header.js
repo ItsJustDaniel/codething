@@ -6,6 +6,9 @@ const Header = ({ navbarPush, cartItems }) => {
   return (
     <div className={navbarPush}>
       <ul className="navbar">
+        <Link className="nav-link" to="/contact">
+          Contact
+        </Link>
         <Link className="nav-link" to="/">
           Home
         </Link>

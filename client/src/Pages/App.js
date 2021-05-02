@@ -5,10 +5,12 @@ import Home from "./Home";
 import Cart from "./Cart";
 import Context from "../Context";
 import Checkout from "./Checkout";
+import Contact from "./Contact";
 import axios from "axios";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Display from "../components/Display";
 import Loader from "../components/Loader";
+
 import "./App.scss";
 
 class App extends React.Component {
@@ -17,7 +19,7 @@ class App extends React.Component {
     isLoading: true,
     desc: [],
     cart: [],
-    navbarPush: "navbar-push",
+    navbarPush: "navbar-unpush",
     countries: [],
     paymentID: "",
   };
@@ -137,6 +139,7 @@ class App extends React.Component {
                 <Route path="/products/:id" component={Purchase}></Route>
                 <Route path="/cart" component={Cart}></Route>
                 <Route path="/checkout" component={Checkout}></Route>
+                <Route path="/contact" component={Contact}></Route>
                 <Route exact path="/" component={Home}></Route>
                 <Route path="*">
                   <h1>Error 404, Page not found</h1>

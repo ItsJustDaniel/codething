@@ -10,7 +10,15 @@ import axios from "axios";
 import "./Payment.scss";
 
 const Payment = (props) => {
-  const { Shipping, cart, User, paymentID, setPaymentID } = props;
+  const {
+    Shipping,
+    cart,
+    User,
+    paymentID,
+    setPaymentID,
+    setSlide,
+    Slide,
+  } = props;
   const [succeeded, setSucceeded] = useState(false);
   const [error, setError] = useState(null);
   const [processing, setProcessing] = useState("");
@@ -81,7 +89,6 @@ const Payment = (props) => {
   const onPaymentSubmit = async (ev) => {
     ev.preventDefault();
     setProcessing(true);
-    console.log(clientSecret);
 
     const payload = await stripe.confirmCardPayment(clientSecret, {
       payment_method: {
@@ -113,6 +120,7 @@ const Payment = (props) => {
         fileIDs: fileIDs,
       }
     );
+    await setSlide(Slide + 1);
   };
 
   return (
