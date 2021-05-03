@@ -13,6 +13,7 @@ process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 router.post("/", (req, res) => {
   console.log(req.body);
   console.log(process.env.EMAIL_PASS);
+  console.log(req.body.email);
   const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
@@ -22,9 +23,9 @@ router.post("/", (req, res) => {
   });
 
   const mailOptions = {
-    from: req.body.email,
+    from: `${req.body.name} ${req.body.email}`,
     to: "danielli12750@gmail.com",
-    subject: `Message from ${req.body.name}`,
+    subject: `Message from ${req.body.name}: ${req.body.email}`,
     text: req.body.message,
   };
 
