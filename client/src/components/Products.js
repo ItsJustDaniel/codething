@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./Products.css";
 
-const Products = ({ products, navbarPush }) => {
+const Products = ({ products, navbarPush, price }) => {
   return (
     <div className="products">
       <h1 className="Products-title">Products</h1>
@@ -20,7 +20,7 @@ const Products = ({ products, navbarPush }) => {
               </Link>
               <h3 className="product-text">{item.sync_product.name}</h3>
               <h3 className="product-price">
-                ${item.sync_variants[0].retail_price}
+                ${price[i][1] ? price[i][1] : price[i][0]}
               </h3>
             </div>
           );

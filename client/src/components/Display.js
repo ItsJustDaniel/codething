@@ -7,7 +7,12 @@ const Display = (props) => {
   return (
     <div className="Content-Container">
       <div className="Content">
-        <Header navbarPush={props.navbarPush} cartItems={props.cartItems} />
+        <Header
+          navbarPush={props.navbarPush}
+          cartItems={props.cartItems}
+          currencySwitch={props.currencySwitch}
+          currency={props.currency}
+        />
         {props.children}
       </div>
       <Footer className="footer" />

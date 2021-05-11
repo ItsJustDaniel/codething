@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import "./Cart.scss";
 
 const Cart = (props) => {
-  const { cart, products } = props.context;
+  const { cart, products, price } = props.context;
   console.log(cart);
   useEffect(() => {
     props.context.shouldNavPush();
@@ -29,7 +29,7 @@ const Cart = (props) => {
               id={item.id}
               variantID={item.variantID}
               size={item.size}
-              price={item.price}
+              price={price[item.productId][item.variantIndex]}
               products={products}
               index={i}
               removeFromCart={props.context.removeFromCart}

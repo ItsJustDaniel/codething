@@ -17,12 +17,9 @@ const Contact = (props) => {
   const onContactSubmit = async (e) => {
     e.preventDefault();
 
-    const sendMail = await axios.post(
-      "https://code-clothing.herokuapp.com/mail",
-      {
-        ...message,
-      }
-    );
+    const sendMail = await axios.post("http://localhost:9000/mail", {
+      ...message,
+    });
     console.log(sendMail);
   };
 

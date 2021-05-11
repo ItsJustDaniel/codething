@@ -23,6 +23,9 @@
   font-weight: bold;
   color: #575151;
   z-index: 1;
+  width: 100%;
+  justify-content: space-between;
+  padding-left: 0;
 }
 
 .nav-link {
@@ -39,9 +42,56 @@
 .nav-cart {
   border-radius: 100%;
   color: white;
-  background-color: #ffa45c;
   text-align: center;
   position: relative;
   bottom: 33px;
   left: 8px;
+  background-color: #ffa45c;
+}
+
+.nav-right {
+  display: flex;
+}
+
+.dropbtn {
+  background-color: #ffa45c;
+  outline: none;
+  border: none;
+  padding: 0.5em 1em;
+  font-weight: bold;
+  color: white;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.dropbtn:hover,
+.dropdown-option:hover {
+  background-color: #f5b585;
+}
+
+.dropdown-content a:hover {
+  background-color: #ffa45c;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.dropdown-option {
+  background-color: #ffa45c;
+  color: white;
+  padding: 0.5em 1em;
+  font-weight: bold;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.dropdown {
+  position: relative;
+  bottom: 2px;
 }

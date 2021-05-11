@@ -24,6 +24,11 @@ const Payment = (props) => {
   const [processing, setProcessing] = useState("");
   const [disabled, setDisabled] = useState(true);
   const [clientSecret, setClientSecret] = useState("");
+  const [errElement, setErrElement] = useState({
+    CardElement: "",
+    CardCvcElement: "",
+    CardExpiryElement: "",
+  });
 
   const stripe = useStripe();
   const elements = useElements();
@@ -80,6 +85,7 @@ const Payment = (props) => {
   };
 
   const handleChange = async (event) => {
+    console.log(event);
     // Listen for changes in the CardElement
     // and display any errors as the customer types their card details
     setDisabled(event.empty);
@@ -134,6 +140,7 @@ const Payment = (props) => {
             options={cardStyle}
             id="card-number"
             onChange={handleChange}
+            name="cardNumber"
           />
           <div className="card-back">
             <div>
@@ -143,6 +150,7 @@ const Payment = (props) => {
                 options={cardStyle}
                 className="card-element"
                 onChange={handleChange}
+                name="cardExp"
               />
             </div>
             <div>
@@ -152,6 +160,7 @@ const Payment = (props) => {
                 options={cardStyle}
                 className="card-element"
                 onChange={handleChange}
+                name="cardCVC"
               />
             </div>
           </div>

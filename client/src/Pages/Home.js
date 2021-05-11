@@ -5,7 +5,7 @@ import withContext from "../withContext";
 import "./Home.scss";
 
 const Home = (props) => {
-  const { products, isLoading } = props.context;
+  const { products, isLoading, price } = props.context;
   useEffect(() => {
     props.context.shouldNavPush();
   }, [props.context.navbarPush, props.context]);
@@ -13,7 +13,7 @@ const Home = (props) => {
   return (
     <div className="home-container">
       <Hero products={products} isLoading={isLoading} />
-      <Products products={products} />
+      <Products products={products} price={price} />
     </div>
   );
 };

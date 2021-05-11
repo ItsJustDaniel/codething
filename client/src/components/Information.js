@@ -1,8 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Information.scss";
 
 const Information = (props) => {
-  const { onInputChange, countries, User, onShippingClick } = props;
+  const {
+    onInputChange,
+    countries,
+    User,
+    onShippingSubmit,
+    errors,
+    touched,
+    handleBlur,
+  } = props;
 
   const stateList = () => {
     if (User.countryCode) {
@@ -45,66 +53,95 @@ const Information = (props) => {
 
   return (
     <div className="form">
-      <div className="form-container">
+      <form className="form-container" onSubmit={onShippingSubmit}>
         <div className="form-contacts ">
           <h3>Contacts</h3>
-          <label>Email (optional)</label>
-          <input
-            name="email"
-            onChange={(e) => {
-              onInputChange(e);
-            }}
-            className="form-input"
-            value={User.email}
-          ></input>
-          <label>Phone Number (optional)</label>
-          <input
-            className="form-input"
-            name="phone"
-            onChange={(e) => {
-              onInputChange(e);
-            }}
-            value={User.phone}
-          ></input>
+          <div>
+            <label>Email (optional)</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              onChange={(e) => {
+                onInputChange(e);
+              }}
+              className="form-input"
+              value={User.email}
+            ></input>
+          </div>
+          <div>
+            <label>Phone Number (optional)</label>
+
+            <input
+              className="form-input"
+              name="phone"
+              onChange={(e) => {
+                onInputChange(e);
+              }}
+              value={User.phone}
+            ></input>
+          </div>
         </div>
         <div className="form-shipping">
           <h3>Shipping</h3>
-          <label>Full Name</label>
-          <input
-            className="form-input"
-            name="name"
-            onChange={(e) => {
-              onInputChange(e);
-            }}
-            value={User.name}
-          ></input>
-          <label>Address</label>
-          <input
-            className="form-input"
-            name="address"
-            onChange={(e) => {
-              onInputChange(e);
-            }}
-            value={User.address}
-          ></input>
-          <label>Address 2 (optional)</label>
-          <input
-            className="form-input"
-            name="address2"
-            onChange={(e) => {
-              onInputChange(e);
-            }}
-            value={User.address2}
-          ></input>
-          <label>City</label>
-          <input
-            className="form-input"
-            name="city"
-            onChange={(e) => {
-              onInputChange(e);
-            }}
-            value={User.city}
-          ></input>
+          <div>
+            <label>Full Name</label>
+            <input
+              className="form-input"
+              onChange={onInputChange}
+              required
+              value={User.fullName}
+              name="fullName"
+              onBlur={handleBlur}
+              type="text"
+            ></input>
+            <div className="form-error">
+              {touched.fullName && errors.fullName}
+            </div>
+          </div>
+          <div>
+            <label>Address</label>
+            <input
+              className="form-input"
+              name="address"
+              onChange={(e) => {
+                onInputChange(e);
+              }}
+              onBlur={handleBlur}
+              value={User.address}
+              type="text"
+              required
+            ></input>
+            <div className="form-error">
+              {touched.address && errors.address}
+            </div>
+          </div>
+          <div>
+            <label>Address 2 (optional)</label>
+            <input
+              className="form-input"
+              name="address2"
+              onChange={(e) => {
+                onInputChange(e);
+              }}
+              value={User.address2}
+            ></input>
+          </div>
+          <div>
+            <label>City</label>
+            <input
+              className="form-input"
+              type="text"
+              name="city"
+              onChange={(e) => {
+                onInputChange(e);
+              }}
+              value={User.city}
+              onBlur={handleBlur}
+              required
+            ></input>
+            <div className="form-error">{touched.city && errors.city}</div>
+          </div>
           <div className="location-form">
             <div className="country-container">
               <label>Country</label>
@@ -138,6 +175,7 @@ const Information = (props) => {
                   );
                 })}
               </select>
+              {touched.country && errors.country}
             </div>
             <div>{stateList()}</div>
 
@@ -146,21 +184,22 @@ const Information = (props) => {
               <input
                 className="zip-input location"
                 name="zip"
-                onChange={(e) => {
-                  onInputChange(e);
-                }}
+                onChange={onInputChange}
                 value={User.zip}
+                onBlur={handleBlur}
+                required
               ></input>
+              <div className="form-error">{touched.zip && errors.zip}</div>
             </div>
           </div>
         </div>
 
         <div className="checkout-button-container">
-          <button className="checkout-button" onClick={() => onShippingClick()}>
+          <button className="checkout-button" type="submit">
             Continue To Payment
           </button>
         </div>
-      </div>
+      </form>
     </div>
   );
 };

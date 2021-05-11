@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import withContext from "../withContext";
 import axios from "axios";
 import "./Checkout.scss";
@@ -21,7 +21,7 @@ const Checkout = (props) => {
   const [User, setUser] = useState({
     email: "",
     phone: "",
-    name: "",
+    fullName: "",
     address: "",
     address2: "",
     city: "",
@@ -32,19 +32,87 @@ const Checkout = (props) => {
   const [Shipping, setShipping] = useState({});
   const [Loading, setLoading] = useState(false);
   const [information, setInformation] = useState(false);
+  const [errors, setErrors] = useState({});
+  const [touched, setTouched] = useState({});
 
-  const { countries, cart, products, paymentID, setPaymentID } = props.context;
+  const {
+    countries,
+    cart,
+    products,
+    paymentID,
+    setPaymentID,
+    price,
+    currencyRate,
+  } = props.context;
   useEffect(() => {
     props.context.shouldNavPush();
     console.log("repeat?");
   }, []);
 
-  const onInputChange = (e) => {
-    setUser({ ...User, [e.target.name]: e.target.value });
-    console.log(User);
+  const fieldValidation = (fieldName, fieldValue) => {
+    if (fieldValue.trim() === "") {
+      return `${fieldName} is required`;
+    }
+
+    return null;
   };
 
-  const onShippingClick = async () => {
+  const zipValidation = (zipValue) => {
+    const regexZip = /^[0-9]*$/;
+
+    if (zipValue.trim() === "") {
+      return "zip is required";
+    }
+    console.log(regexZip.test(zipValue.trim()));
+    if (!regexZip.test(zipValue.trim())) {
+      return "zip must be a number";
+    }
+  };
+
+  const validate = {
+    fullName: (field) => fieldValidation("Full Name", field),
+    address: (field) => fieldValidation("address", field),
+    City: (field) => fieldValidation("City", field),
+    zip: zipValidation,
+  };
+
+  //change event handler
+  const onInputChange = (e) => {
+    const { name, value: newValue, type } = e.target;
+
+    const value = type === "number" ? +newValue : newValue;
+
+    setUser({ ...User, [name]: value });
+    setTouched({
+      ...touched,
+      [name]: true,
+    });
+  };
+
+  //function that handles validate logic
+  const handleBlur = (e) => {
+    const { name, value } = e.target;
+
+    setTouched({
+      ...touched,
+      [name]: true,
+    });
+    const { [name]: removedError, ...rest } = errors;
+    console.log(name);
+    console.log(touched[name]);
+    console.log(value);
+    const error = validate[name](value);
+
+    console.log(error);
+    setErrors({
+      ...rest,
+      ...(error && { [name]: error }),
+    });
+  };
+
+  const onShippingSubmit = async (e) => {
+    e.preventDefault();
+
     const variantIDs = cart.map((item) => {
       return item.variantID;
     });
@@ -62,6 +130,8 @@ const Checkout = (props) => {
     setSlide(Slide + 1);
     setInformation(true);
   };
+
+  //validate when clicked
 
   if (Loading === true) {
     return (
@@ -91,7 +161,10 @@ const Checkout = (props) => {
             onInputChange={onInputChange}
             countries={countries}
             User={User}
-            onShippingClick={onShippingClick}
+            onShippingSubmit={onShippingSubmit}
+            handleBlur={handleBlur}
+            errors={errors}
+            touched={touched}
           />
         ) : Slide === 2 ? (
           <Elements stripe={promise}>
@@ -109,7 +182,13 @@ const Checkout = (props) => {
           <Success Shipping={Shipping} />
         )}
       </div>
-      <OrderSummary products={products} cart={cart} shipping={Shipping} />
+      <OrderSummary
+        products={products}
+        cart={cart}
+        shipping={Shipping}
+        price={price}
+        currencyRate={currencyRate}
+      />
     </div>
   );
 };

@@ -14,7 +14,7 @@ const Purchase = (props) => {
     index: 0,
     id: 0,
   });
-  const { products, isLoading, desc } = props.context;
+  const { products, isLoading, desc, price } = props.context;
   let { id } = useParams();
   console.log(products.length);
 
@@ -29,9 +29,10 @@ const Purchase = (props) => {
         name: products[id].sync_variants[0].product.name,
         size: products[id].sync_variants[0].name.match(sizeRegex).join(""),
         variant_id: products[id].sync_variants[0].variant_id,
-        price: products[id].sync_variants[0].retail_price,
+        price: price[id][0],
         index: 0,
         id: products[id].sync_variants[0].files[0].id,
+        productId: id,
       });
     }
   }, [id, isLoading, products, props.context]);
@@ -70,9 +71,10 @@ const Purchase = (props) => {
                       name: i.product.name,
                       size: i.name.match(sizeRegex).join(""),
                       variant_id: i.variant_id,
-                      price: i.retail_price,
+                      price: price[id][index],
                       index: index,
                       id: i.files[0].id,
+                      productId: id,
                     }));
                   }}
                 >
@@ -89,7 +91,9 @@ const Purchase = (props) => {
                 variant.variant_id,
                 variant.size,
                 variant.price,
-                variant.id
+                variant.id,
+                variant.productId,
+                variant.index
               )
             }
           >

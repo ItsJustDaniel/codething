@@ -22,6 +22,9 @@ class App extends React.Component {
     navbarPush: "navbar-unpush",
     countries: [],
     paymentID: "",
+    currency: "AUD",
+    currencyRate: 1,
+    price: [],
   };
 
   setPaymentID = (id) => {
@@ -51,15 +54,23 @@ class App extends React.Component {
       this.getProductDesc(),
       axios.get("https://code-clothing.herokuapp.com/countries"),
     ]);
+    let price = [];
+    for (let i = 0; i < products.data.length; i++) {
+      price.push([]);
+      for (let e = 0; e < products.data[i].sync_variants.length; e++) {
+        price[i].push(products.data[i].sync_variants[e].retail_price);
+      }
+    }
     this.setState(
       {
         products: products.data,
         isLoading: false,
         desc: desc.data,
         countries: countries.data.result,
+        price: price,
       },
       () => {
-        console.log(this.state.products);
+        console.log(this.state.price);
       }
     );
   }
@@ -68,7 +79,7 @@ class App extends React.Component {
     this.setState({ pageChange: true });
   };
 
-  addToCart = (id, variantID, size, price, fileID) => {
+  addToCart = (id, variantID, size, price, fileID, productId, variantIndex) => {
     this.setState(
       {
         cart: [
@@ -79,6 +90,8 @@ class App extends React.Component {
             size: size,
             price: price,
             fileID: fileID,
+            productId: productId,
+            variantIndex: variantIndex,
           },
         ],
       },
@@ -110,6 +123,40 @@ class App extends React.Component {
     }
   };
 
+  //when currency is swapped function is called
+  currencySwitch = async (currency) => {
+    const rate = await axios.post("http://localhost:9000/currencies", {
+      symbol: currency,
+    });
+    let newPrices = this.state.price;
+    console.log(rate);
+    for (let i = 0; i < this.state.price.length; i++) {
+      for (let e = 0; e < this.state.price[i].length; e++) {
+        console.log(this.state.products[i].sync_variants[e].retail_price);
+        newPrices[i][e] = (
+          Math.ceil(
+            parseFloat(this.state.products[i].sync_variants[e].retail_price) *
+              rate.data.currencyRate.amount *
+              20
+          ) / 20
+        ).toFixed(2);
+      }
+    }
+    console.log(newPrices);
+
+    this.setState(
+      {
+        currency: currency,
+        currencyRate: rate.data.currencyRate.amount,
+        price: newPrices,
+      },
+      () => {
+        console.log(this.state.currencyRate);
+      }
+    );
+    console.log(rate.data);
+  };
+
   render() {
     if (this.state.isLoading) {
       return (
@@ -128,12 +175,15 @@ class App extends React.Component {
             shouldNavPush: this.navbarPush,
             loadingChange: this.loadingChange,
             setPaymentID: this.setPaymentID,
+            currencySwitch: this.currencySwitch,
           }}
         >
           <Router>
             <Display
               navbarPush={this.state.navbarPush}
               cartItems={this.state.cart.length}
+              currencySwitch={this.currencySwitch}
+              currency={this.state.currency}
             >
               <Switch>
                 <Route path="/products/:id" component={Purchase}></Route>

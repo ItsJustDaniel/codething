@@ -8,3 +8,11 @@
   display: flex;
   justify-content: center;
 }
+
+.form-input:focus:required:invalid {
+  border-color: #eb1c26;
+}
+
+.form-error {
+  color: #eb1c26;
+}
