@@ -125,9 +125,12 @@ class App extends React.Component {
 
   //when currency is swapped function is called
   currencySwitch = async (currency) => {
-    const rate = await axios.post("http://localhost:9000/currencies", {
-      symbol: currency,
-    });
+    const rate = await axios.post(
+      "https://code-clothing.herokuapp.com/currencies",
+      {
+        symbol: currency,
+      }
+    );
     let newPrices = this.state.price;
     console.log(rate);
     for (let i = 0; i < this.state.price.length; i++) {
