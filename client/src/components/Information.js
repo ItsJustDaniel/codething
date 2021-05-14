@@ -10,6 +10,7 @@ const Information = (props) => {
     errors,
     touched,
     handleBlur,
+    buttonLoading,
   } = props;
 
   const stateList = () => {
@@ -196,7 +197,13 @@ const Information = (props) => {
 
         <div className="checkout-button-container">
           <button className="checkout-button" type="submit">
-            Continue To Payment
+            {buttonLoading ? (
+              <div>
+                Loading <i class="fa fa-circle-o-notch fa-spin"></i>
+              </div>
+            ) : (
+              "Continue To Payment"
+            )}
           </button>
         </div>
       </form>

@@ -18,6 +18,8 @@ const Payment = (props) => {
     setPaymentID,
     setSlide,
     Slide,
+    buttonLoading,
+    setButtonLoading,
   } = props;
   const [succeeded, setSucceeded] = useState(false);
   const [error, setError] = useState(null);
@@ -95,8 +97,10 @@ const Payment = (props) => {
   const onPaymentSubmit = async (ev) => {
     ev.preventDefault();
     setProcessing(true);
-
+    console.log(User.email);
+    setButtonLoading(true);
     const payload = await stripe.confirmCardPayment(clientSecret, {
+      receipt_email: User.email,
       payment_method: {
         card: elements.getElement(CardNumberElement),
       },
@@ -126,6 +130,7 @@ const Payment = (props) => {
         fileIDs: fileIDs,
       }
     );
+    setButtonLoading(false);
     await setSlide(Slide + 1);
   };
 
@@ -185,7 +190,13 @@ const Payment = (props) => {
         </h5>
         <div className="checkout-buy-container">
           <button className="checkout-buy" id="submit">
-            Buy Now
+            {buttonLoading ? (
+              <div>
+                Loading <i class="fa fa-circle-o-notch fa-spin"></i>
+              </div>
+            ) : (
+              " Buy Now"
+            )}
           </button>
         </div>
         {/* Show any error when processing payment*/}

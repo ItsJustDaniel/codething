@@ -34,6 +34,7 @@ const Checkout = (props) => {
   const [information, setInformation] = useState(false);
   const [errors, setErrors] = useState({});
   const [touched, setTouched] = useState({});
+  const [buttonLoading, setButtonLoading] = useState(false);
 
   const {
     countries,
@@ -112,11 +113,10 @@ const Checkout = (props) => {
 
   const onShippingSubmit = async (e) => {
     e.preventDefault();
-
+    setButtonLoading(true);
     const variantIDs = cart.map((item) => {
       return item.variantID;
     });
-    setLoading(true);
     const sendShipping = await axios.post(
       "https://code-clothing.herokuapp.com/shippingRates",
       {
@@ -124,7 +124,7 @@ const Checkout = (props) => {
         variantIDs: variantIDs,
       }
     );
-    await setLoading(false);
+    setButtonLoading(false);
     await console.log(sendShipping.data.result);
     setShipping(...sendShipping.data.result);
     setSlide(Slide + 1);
@@ -165,6 +165,8 @@ const Checkout = (props) => {
             handleBlur={handleBlur}
             errors={errors}
             touched={touched}
+            buttonLoading={buttonLoading}
+            setButtonLoading={setButtonLoading}
           />
         ) : Slide === 2 ? (
           <Elements stripe={promise}>
@@ -176,6 +178,8 @@ const Checkout = (props) => {
               setPaymentID={setPaymentID}
               setSlide={setSlide}
               Slide={Slide}
+              buttonLoading={buttonLoading}
+              setButtonLoading={setButtonLoading}
             />
           </Elements>
         ) : (

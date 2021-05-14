@@ -10,6 +10,7 @@ const Contact = (props) => {
     message: "",
   });
   const [messageSuccess, setMessageSuccess] = useState(null);
+  const [buttonLoading, setButtonLoading] = useState(false);
 
   useEffect(() => {
     props.context.shouldNavPush();
@@ -17,7 +18,7 @@ const Contact = (props) => {
 
   const onContactSubmit = async (e) => {
     e.preventDefault();
-    props.context.loadingChange();
+    setButtonLoading(true);
     const sendMail = await axios.post(
       "https://code-clothing.herokuapp.com/mail",
       {
@@ -27,7 +28,8 @@ const Contact = (props) => {
 
     console.log(sendMail);
 
-    await props.context.loadingChange();
+    setButtonLoading(false);
+
     if (sendMail.data === "success") {
       setMessageSuccess(true);
     } else {
@@ -75,15 +77,23 @@ const Contact = (props) => {
           ></textarea>
         </div>
         {messageSuccess ? (
-          <p className="message-status">Message sent successfully </p>
+          <p className="message-status status-success">
+            Message sent successfully{" "}
+          </p>
         ) : messageSuccess === false ? (
-          <p className="message-status">Message failed</p>
+          <p className="message-status status-failure">Message failed</p>
         ) : (
           <div></div>
         )}
         <div className="contact-submit-container">
           <button className="contact-submit" id="submit">
-            Submit
+            {buttonLoading ? (
+              <div>
+                Loading <i class="fa fa-circle-o-notch fa-spin"></i>
+              </div>
+            ) : (
+              "Submit"
+            )}
           </button>
         </div>
       </form>
