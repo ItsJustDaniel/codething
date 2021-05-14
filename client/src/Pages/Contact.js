@@ -9,6 +9,7 @@ const Contact = (props) => {
     name: "",
     message: "",
   });
+  const [messageSuccess, setMessageSuccess] = useState(null);
 
   useEffect(() => {
     props.context.shouldNavPush();
@@ -16,11 +17,19 @@ const Contact = (props) => {
 
   const onContactSubmit = async (e) => {
     e.preventDefault();
-
+    props.context.loadingChange();
     const sendMail = await axios.post("http://localhost:9000/mail", {
       ...message,
     });
+
     console.log(sendMail);
+
+    await props.context.loadingChange();
+    if (sendMail.data === "success") {
+      setMessageSuccess(true);
+    } else {
+      setMessageSuccess(false);
+    }
   };
 
   const onContactChange = (e) => {
@@ -62,6 +71,13 @@ const Contact = (props) => {
             }}
           ></textarea>
         </div>
+        {messageSuccess ? (
+          <p className="message-status">Message sent successfully </p>
+        ) : messageSuccess === false ? (
+          <p className="message-status">Message failed</p>
+        ) : (
+          <div></div>
+        )}
         <div className="contact-submit-container">
           <button className="contact-submit" id="submit">
             Submit

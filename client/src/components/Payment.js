@@ -24,11 +24,7 @@ const Payment = (props) => {
   const [processing, setProcessing] = useState("");
   const [disabled, setDisabled] = useState(true);
   const [clientSecret, setClientSecret] = useState("");
-  const [errElement, setErrElement] = useState({
-    CardElement: "",
-    CardCvcElement: "",
-    CardExpiryElement: "",
-  });
+  const [errElement, setErrElement] = useState({});
 
   const stripe = useStripe();
   const elements = useElements();
@@ -90,6 +86,10 @@ const Payment = (props) => {
     // and display any errors as the customer types their card details
     setDisabled(event.empty);
     setError(event.error ? event.error.message : "");
+    setErrElement({
+      ...errElement,
+      [event.elementType]: event.error ? event.error.message : "",
+    });
   };
 
   const onPaymentSubmit = async (ev) => {
@@ -142,8 +142,13 @@ const Payment = (props) => {
             onChange={handleChange}
             name="cardNumber"
           />
+          {errElement.cardNumber && (
+            <div className="card-error" role="alert">
+              {errElement.cardNumber}
+            </div>
+          )}
           <div className="card-back">
-            <div>
+            <div className="card-back-containers">
               <label className="card-label">Expiration</label>
               <CardExpiryElement
                 id="card-expiry"
@@ -152,8 +157,13 @@ const Payment = (props) => {
                 onChange={handleChange}
                 name="cardExp"
               />
+              {errElement.cardExpiry && (
+                <div className="card-error" role="alert">
+                  {errElement.cardExpiry}
+                </div>
+              )}
             </div>
-            <div>
+            <div className="card-back-containers">
               <label className="card-label">CVC</label>
               <CardCvcElement
                 id="card-cvc"
@@ -162,6 +172,11 @@ const Payment = (props) => {
                 onChange={handleChange}
                 name="cardCVC"
               />
+              {errElement.cardCvc && (
+                <div className="card-error" role="alert">
+                  {errElement.cardCvc}
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -174,11 +189,7 @@ const Payment = (props) => {
           </button>
         </div>
         {/* Show any error when processing payment*/}
-        {error && (
-          <div className="card-error" role="alert">
-            {error}
-          </div>
-        )}
+
         {/* Show sucess message if completed*/}
         {succeeded && (
           <p className={succeeded ? "result-message" : "result-message hidden"}>

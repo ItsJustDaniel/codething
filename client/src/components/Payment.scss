@@ -62,14 +62,20 @@
   margin: 0.5em 0.5em 0.5em 0;
   border: 0.5px solid black;
   border-radius: 2px;
-  min-width: 80px;
+  min-width: 100px;
   border-color: (rgb(113, 113, 113));
 }
 
-.card-cvc {
-  min-width: 80px;
-}
 .card-back {
   display: flex;
   flex-direction: row;
+}
+
+.card-back-containers {
+  max-width: 100px;
+  margin-right: 1.5em;
+}
+
+.card-error {
+  color: #eb1c26;
 }

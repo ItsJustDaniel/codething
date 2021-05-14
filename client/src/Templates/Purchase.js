@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import withContext from "../withContext";
 import "./Purchase.scss";
+import Checkmark from "../components/checkmark";
 
 const Purchase = (props) => {
   //properties of item
@@ -14,6 +15,7 @@ const Purchase = (props) => {
     index: 0,
     id: 0,
   });
+  const [processed, setProcessed] = useState(false);
   const { products, isLoading, desc, price } = props.context;
   let { id } = useParams();
   console.log(products.length);
@@ -21,7 +23,8 @@ const Purchase = (props) => {
   useEffect(() => {
     console.log("repeat?");
     props.context.shouldNavPush();
-    const sizeRegex = /[XS]+$|[S]+$|[M]+$|[L]+$|[XL]+$|[2XL]+$|[3XL]+$|[4XL]+$|/gi;
+    const sizeRegex =
+      /[XS]+$|[S]+$|[M]+$|[L]+$|[XL]+$|[2XL]+$|[3XL]+$|[4XL]+$|/gi;
 
     if (!isLoading) {
       console.log("works");
@@ -37,7 +40,24 @@ const Purchase = (props) => {
     }
   }, [id, isLoading, products, props.context]);
   const productDesc = desc[id].result.product.description;
-  const sizeRegex = /[XS]+$|[S]+$|[M]+$|[L]+$|[XL]+$|[2XL]+$|[3XL]+$|[4XL]+$|/gi;
+  const sizeRegex =
+    /[XS]+$|[S]+$|[M]+$|[L]+$|[XL]+$|[2XL]+$|[3XL]+$|[4XL]+$|/gi;
+
+  const onCartClicked = () => {
+    setProcessed(true);
+    props.context.addToCart(
+      id,
+      variant.variant_id,
+      variant.size,
+      variant.price,
+      variant.id,
+      variant.productId,
+      variant.index
+    );
+    setTimeout(() => {
+      setProcessed(false);
+    }, 1000);
+  };
 
   return (
     <div className="purchase-container">
@@ -83,21 +103,8 @@ const Purchase = (props) => {
               );
             })}
           </div>
-          <button
-            className="purchase-cart"
-            onClick={() =>
-              props.context.addToCart(
-                id,
-                variant.variant_id,
-                variant.size,
-                variant.price,
-                variant.id,
-                variant.productId,
-                variant.index
-              )
-            }
-          >
-            <span>Add to Cart</span>
+          <button className="purchase-cart" onClick={onCartClicked}>
+            {processed ? <Checkmark /> : <span>Add to Cart</span>}
           </button>
         </div>
       </div>

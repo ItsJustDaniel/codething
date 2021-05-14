@@ -40,12 +40,9 @@ class App extends React.Component {
   };
 
   loadingChange = () => {
-    this.setState(
-      {
-        isLoading: !this.state.isLoading,
-      },
-      () => console.log(this.state.isLoading)
-    );
+    this.setState({
+      isLoading: !this.state.isLoading,
+    });
   };
 
   async componentDidMount() {
